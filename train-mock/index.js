@@ -7,5 +7,11 @@ app.get('/', (request, response) => {
     response.send('hello ~ express')
     response.end()
 })
+app.get('/rest', (request, response) => {
+    response.json({
+        name: 'zhangsan',
+        age: 24
+    })
+})
 
 app.listen(8000)
