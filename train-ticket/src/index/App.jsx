@@ -1,13 +1,50 @@
-import React from 'react'
+import React, { useMemo, useCallback } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import Header from '../common/header'
+import Journey from './journey/journey'
+import CityData from '../common/citydata'
+import { exchangeFromTo, showCitySelector } from './store/action'
 
-function App() {
-    return(
-        <div>Hello~</div>
+function App(props) {
+    const { 
+        from,
+        to,
+        isCitySelectorVisible,
+        isLoadingCityDate,
+        cityDate,
+        hideCityDate,
+        dispatch,
+    } = props
+    const onBack = useCallback(() => {
+        window.history.back(-1)
+    }, [])
+    const cbs = useMemo(() => {
+        return bindActionCreators({
+            exchangeFromTo,
+            showCitySelector
+        }, dispatch)
+    }, [])
+    return (
+        <div>
+            <Header title={'火车票'} onBack={onBack}/>
+            <Journey
+                from={from}
+                to={to}
+                {...cbs}
+            />
+            <CityData
+                show={isCitySelectorVisible}
+                isLoading={isLoadingCityDate}
+                data={cityDate}
+                {...cbs}
+            />
+        </div>
     )
 }
+const mapStateToProps = (state) => state
+const mapDispatchToProps = (dispatch) => {
+    return { dispatch }
+}
 
-export default connect(
-    function mapStoreToProps() {},
-    function mapDispatchToProps() {}
-)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

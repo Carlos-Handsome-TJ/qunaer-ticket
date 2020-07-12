@@ -52,10 +52,6 @@ export const showCitySelector = (isCitySelectorVisible) => {
     return (dispatch) => {
         dispatch({
             type: ACTION_SET_IS_CITY_SELECTOR_VISIBLE,
-            payload: true
-        })
-        dispatch({
-            type: ACTION_SET_CURRENT_SELECTING_LEFT_CITY,
             payload: isCitySelectorVisible
         })
     }

@@ -12,30 +12,27 @@ const defaultState = {
     from: '北京',
     to: '上海',
     isCitySelectorVisible: false,
+    isLoadingCityDate: false,
+    cityDate: null,
     isDateSelectorVisible: false,
     currentSelectingLeftCity: false,
-    cityDate: null,
-    isLoadingCityDate: false,
     hightSpeed: false
 }
 export default (state = defaultState, action) => {
+    let newState
     switch (action.type) {
         case ACTION_SET_FROM:
-            return action.payload;
+            newState = Object.assign({}, state)
+            newState.from = action.payload
+            return newState
         case ACTION_SET_TO:
-            return action.payload;
+            newState = Object.assign({}, state)
+            newState.to = action.payload
+            return newState
         case ACTION_SET_IS_CITY_SELECTOR_VISIBLE:
-            return action.payload;
-        case ACTION_SET_IS_DATE_SELECTOR_VISIBLE:
-            return action.payload;
-        case ACTION_SET_CURRENT_SELECTING_LEFT_CITY:
-            return action.payload;
-        case ACTION_SET_CITY_DATE:
-            return action.payload;
-        case ACTION_SET_IS_LOADING_CITY_DATE:
-            return action.payload;
-        case ACTION_SET_HIGHT_SPEED:
-            return action.payload;
+            newState = Object.assign({}, state)
+            newState.isCitySelectorVisible = action.payload
+            return newState
         default:
             return state
     }
