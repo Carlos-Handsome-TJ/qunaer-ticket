@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { LeftOutlined, CloseCircleOutlined, SearchOutlined } from '@ant-design/icons'
 import classnames from 'classnames'
@@ -10,9 +10,16 @@ export default function CityData(props) {
         isLoading,
         data,
         showCitySelector,
+        fetchCityData
     } = props
     const [searchKey, setSearchKey] = useState('')
     const key = useMemo(() => searchKey.trim(), [searchKey])
+    useEffect(() => {
+        if (!show) {
+            return
+        }
+        fetchCityData()
+    }, [show])
     return (
         <div>
             <div className={classnames('city-selector-wrapper', { hidden: !show})}>

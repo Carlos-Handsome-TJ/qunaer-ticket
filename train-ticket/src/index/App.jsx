@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Header from '../common/header'
 import Journey from './journey/journey'
 import CityData from '../common/citydata'
-import { exchangeFromTo, showCitySelector } from './store/action'
+import { exchangeFromTo, showCitySelector, fetchCityData } from './store/action'
 
 function App(props) {
     const { 
@@ -13,7 +13,6 @@ function App(props) {
         isCitySelectorVisible,
         isLoadingCityDate,
         cityDate,
-        hideCityDate,
         dispatch,
     } = props
     const onBack = useCallback(() => {
@@ -22,7 +21,8 @@ function App(props) {
     const cbs = useMemo(() => {
         return bindActionCreators({
             exchangeFromTo,
-            showCitySelector
+            showCitySelector,
+            fetchCityData
         }, dispatch)
     }, [])
     return (

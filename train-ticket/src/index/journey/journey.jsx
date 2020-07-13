@@ -26,6 +26,7 @@ export default function Journey(props) {
                         className={'station left'}
                         value={to}
                         onClick={() => showCitySelector(true)}
+                        // onClick={() => console.log(123)}
                     ></input>
                 </form>
             </div>
