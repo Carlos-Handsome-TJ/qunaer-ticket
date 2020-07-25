@@ -23,9 +23,9 @@
       outline: none;
     }
     .city-search-form {
-        margin-left: 20px;
-        width: 80%;
-        position: relative;
+      margin-left: 20px;
+      width: 80%;
+      position: relative;
       .city-search-input {
         height: 40px;
         width: 100%;
@@ -39,12 +39,12 @@
         border-radius: 5px;
       }
       .search-icon {
-          position: absolute;
-          left: 10px;
-          top: 50%;
-          color: #ccc;
-          font-size: 14px;
-          transform: translateY(-50%);
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        color: #ccc;
+        font-size: 14px;
+        transform: translateY(-50%);
       }
       .search-clean {
         position: absolute;
@@ -53,6 +53,70 @@
         color: #ccc;
         font-size: 13px;
         transform: translateY(-50%);
+      }
+    }
+  }
+  .city-location {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 0 0px 30px;
+    background: #f5f5f5;
+    .location-history {
+      width: 100%;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 40px;
+    }
+    .btn {
+      display: inline-block;
+      width: 90px;
+      height: 30px;
+      border-radius: 3px;
+      outline: none;
+      border: none;
+      background: #fff;
+    }
+    .btn-location {
+      margin-right: 20px;
+      .local-position {
+        color: #00afc7;
+        margin-right: 5px;
+      }
+    }
+    .city-hot {
+      width: 100%;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 40px;
+    }
+    .city-hot-item {
+      display: flex;
+      flex-flow: row wrap;
+      padding-bottom: 20px;
+      & > .btn {
+        margin-right: 20px;
+        margin-top: 10px;
+      }
+    }
+  }
+  .city-section-wrapper {
+    width: 100%;
+    overflow: hidden;
+    .city-list {
+      width: 100%;
+      display: block;
+      list-style: none;
+      margin-left: 0;
+      .city-title {
+        line-height: 40px;
+        font-weight: bold;
+        list-style: none;
+      }
+      .city-item {
+        width: 100%;
+        line-height: 40px;
+        box-sizing: border-box;
+        border-bottom: 1px solid #eee;
       }
     }
   }

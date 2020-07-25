@@ -7,13 +7,12 @@ import CityData from '../common/citydata'
 import { exchangeFromTo, showCitySelector, fetchCityData } from './store/action'
 
 function App(props) {
-    const { 
+    const {
         from,
         to,
         isCitySelectorVisible,
         isLoadingCityDate,
-        cityDate,
-        hideCityDate,
+        cityData,
         dispatch,
     } = props
     const onBack = useCallback(() => {
@@ -28,7 +27,7 @@ function App(props) {
     }, [])
     return (
         <div>
-            <Header title={'火车票'} onBack={onBack}/>
+            <Header title={'火车票'} onBack={onBack} />
             <Journey
                 from={from}
                 to={to}
@@ -37,7 +36,7 @@ function App(props) {
             <CityData
                 show={isCitySelectorVisible}
                 isLoading={isLoadingCityDate}
-                data={cityDate}
+                cityData={cityData}
                 {...cbs}
             />
         </div>

@@ -39,6 +39,7 @@ export const fetchCityData = () => {
     return (dispatch) => {
         const cityData = JSON.parse(localStorage.getItem('select_city_list') || '{}')
         if (cityData && Date.now() < cityData.expires) {
+            dispatch(getCityData(cityData.city))
             return
         }
         fetch('city')
@@ -50,6 +51,7 @@ export const fetchCityData = () => {
             }))
             dispatch(getCityData(cityData))
         })
+        .catch(err => console.error(err))
     }   
 }
 //日期选择

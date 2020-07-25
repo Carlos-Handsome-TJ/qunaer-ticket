@@ -14,7 +14,7 @@ const defaultState = {
     to: '上海',
     isCitySelectorVisible: false,
     isLoadingCityDate: false,
-    cityDate: null,
+    cityData: null,
     isDateSelectorVisible: false,
     currentSelectingLeftCity: false,
     hightSpeed: false
@@ -36,7 +36,7 @@ export default (state = defaultState, action) => {
             return newState
         case ACTION_GET_CITY_DATA:
             newState = Object.assign({}, state)
-            newState.cityDate = action.payload
+            newState.cityData = action.payload
             return newState
         default:
             return state
