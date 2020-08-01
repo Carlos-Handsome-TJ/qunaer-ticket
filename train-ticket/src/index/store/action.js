@@ -1,12 +1,12 @@
-export const ACTION_SET_FROM = 'SET_FROM'
-export const ACTION_SET_TO = 'SET_TO'
-export const ACTION_SET_IS_CITY_SELECTOR_VISIBLE = 'SET_IS_CITY_SELECTOR_VISIBLE'
-export const ACTION_SET_IS_DATE_SELECTOR_VISIBLE = 'SET_IS_DATE_SELECTOR_VISIBLE'
-export const ACTION_SET_CURRENT_SELECTING_LEFT_CITY = 'SET_CURRENT_SELECTING_LEFT_CITY'
-export const ACTION_GET_CITY_DATA = 'GET_CITY_DATA'
-export const ACTION_SET_IS_LOADING_CITY_DATE = 'SET_IS_LOADING_CITY_DATE'
-export const ACTION_SET_HIGHT_SPEED = 'SET_HIGHT_SPEED'
-
+export const ACTION_SET_FROM = 'set_from'
+export const ACTION_SET_TO = 'set_to'
+export const ACTION_SET_IS_CITY_SELECTOR_VISIBLE = 'set_is_city_selector_visible'
+export const ACTION_SET_IS_DATE_SELECTOR_VISIBLE = 'set_is_date_selector_visible'
+export const ACTION_SET_CURRENT_SELECTING_LEFT_CITY = 'set_current_selecting_left_city'
+export const ACTION_GET_CITY_DATA = 'get_city_data'
+export const ACTION_SET_IS_LOADING_CITY_DATE = 'set_is_loading_city_date'
+export const ACTION_SET_HIGHT_SPEED = 'set_hight_speed'
+export const ACTION_SET_GET_LOCATION_CITY = 'action_set_get_location_city'
 //初始出发车站
 export const setFrom = (from) => ({
     type: ACTION_SET_FROM,
@@ -53,6 +53,28 @@ export const fetchCityData = () => {
         })
         .catch(err => console.error(err))
     }   
+}
+export const setLocationCity = (payload) => ({
+    type: ACTION_SET_GET_LOCATION_CITY,
+    payload
+})
+//获取当前用户网络定位：
+export const getLocation = () => {
+    return (dispatch) => {
+        fetch("http://restapi.amap.com/v3/ip?key=fd580c21a8490716d0e56747100a2994")
+        .then((res) => {
+            if (res.ok) {
+                res.text().then((data) => {
+                    const detail = JSON.parse(data)
+                    const city = detail.city
+                    // const emailCode = detail.adcode //获取当前城市的邮编
+                    dispatch(setLocationCity(city))
+                })
+            }
+        }).catch((res) => {
+            console.log(res.status);
+        });
+    }
 }
 //日期选择
 export const setIsDataSelector = (isDataSelector) => ({

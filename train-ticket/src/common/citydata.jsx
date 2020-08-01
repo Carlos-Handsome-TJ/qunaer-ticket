@@ -110,7 +110,9 @@ const CityData = memo((props) => {
         show,
         cityData,
         showCitySelector,
-        fetchCityData
+        fetchCityData,
+        getLocation,
+        currentLocation
     } = props
     let hotCity, cityList
     if (cityData) {
@@ -169,7 +171,7 @@ const CityData = memo((props) => {
                 </div>
                 <div className={'city-location'}>
                     <p className={'location-history'} data-cate={'history'}>定位/历史</p>
-                    <button className={'btn btn-location'}><EnvironmentOutlined className={'local-position'} />定位</button>
+                    <button className={'btn btn-location'} onClick={() => getLocation()}><EnvironmentOutlined className={'local-position'} />{currentLocation}</button>
                     <button className={'btn btn-default'}>北京</button>
                     <p className={'city-hot'} data-cate={'hot'}>热门</p>
                     {outputHotCity()}
@@ -186,6 +188,8 @@ const CityData = memo((props) => {
                         />
                     })}
                 </div>
+            </div>
+            <div className={'container'}>
             </div>
         </div>
     )

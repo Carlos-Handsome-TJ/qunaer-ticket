@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Header from '../common/header'
 import Journey from './journey/journey'
 import CityData from '../common/citydata'
-import { exchangeFromTo, showCitySelector, fetchCityData } from './store/action'
+import { exchangeFromTo, showCitySelector, fetchCityData, getLocation } from './store/action'
 
 function App(props) {
     const {
@@ -14,6 +14,7 @@ function App(props) {
         isLoadingCityDate,
         cityData,
         dispatch,
+        currentLocation,
     } = props
     const onBack = useCallback(() => {
         window.history.back(-1)
@@ -22,7 +23,8 @@ function App(props) {
         return bindActionCreators({
             exchangeFromTo,
             showCitySelector,
-            fetchCityData
+            fetchCityData,
+            getLocation
         }, dispatch)
     }, [])
     return (
@@ -37,6 +39,7 @@ function App(props) {
                 show={isCitySelectorVisible}
                 isLoading={isLoadingCityDate}
                 cityData={cityData}
+                currentLocation={currentLocation}
                 {...cbs}
             />
         </div>

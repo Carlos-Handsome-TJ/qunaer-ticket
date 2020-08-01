@@ -1,6 +1,7 @@
 {
   "name": "train-ticket",
   "version": "0.1.0",
+  "author": "Carlos_Handsome_TJ",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
