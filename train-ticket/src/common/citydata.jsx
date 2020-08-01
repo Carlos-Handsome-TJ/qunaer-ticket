@@ -1,18 +1,18 @@
-import React, { useState, useMemo, useEffect, memo } from 'react'
+import React, { useState, useMemo, useEffect, memo, useCallback } from 'react'
 import { LeftOutlined, CloseCircleOutlined, SearchOutlined, EnvironmentOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import './citydata.less'
 
-function HotItem(props) {
+const HotItem = memo((props) => {
     const {
         name
     } = props
     return (
         <button className={'btn'}>{name}</button>
     )
-}
-function HotSection(props) {
+})
+const HotSection = memo((props) => {
     const {
         hotCities
     } = props
@@ -28,34 +28,33 @@ function HotSection(props) {
             })}
         </div>
     )
-}
-function CityItem(props) {
+})
+const CityItem = memo((props) => {
     const {
         name
     } = props
-    console.log(name)
     return (
         <li className={'city-item'}>{name}</li>
     )
-}
-function CitySection(props) {
+})
+const CitySection = memo((props) => {
     const {
         cityList = [],
         title
     } = props
     return (
-        <ul className={'city-list'}>
+        <ul className={'city-list'} data-cate={title}>
             <li className={'city-title'}>{title}</li>
             {cityList.map(city => {
-                return <CityItem 
+                return <CityItem
                     key={city.name}
                     name={city.name}
                 />
             })}
         </ul>
     )
-}
-function CityWrapper(props) {
+})
+const CityWrapper = memo((props) => {
     const {
         cityList
     } = props
@@ -72,17 +71,29 @@ function CityWrapper(props) {
             }
         </div>
     )
-}
+})
 
-export default function CityData(props) {
+const AlphaIndex = memo((props) => {
+    const {
+        alpha,
+        scrollToAlpha
+    } = props
+    return (
+        <div className={'alpha-item'} onClick={() => scrollToAlpha(alpha)}>{alpha}</div>
+    )
+})
+
+const Alphabet = Array.from(new Array(26), (ele, index) => {
+    return String.fromCharCode(65 + index)
+})
+const CityData = memo((props) => {
     const {
         show,
-        isLoading,
         cityData,
         showCitySelector,
         fetchCityData
     } = props
-    let city, hotCity, cityList
+    let hotCity, cityList
     if (cityData) {
         cityList = cityData.cityList
         hotCity = cityData.hotCities
@@ -110,6 +121,10 @@ export default function CityData(props) {
             return <div>isLoading</div>
         }
     }
+    const scrollToAlpha = useCallback((alpha) => {
+        document.querySelector(`[data-cate='${alpha}']`)
+            .scrollIntoView()
+    }, [])
     return (
         <div>
             <div className={classnames('city-selector-wrapper', { hidden: !show })}>
@@ -134,49 +149,33 @@ export default function CityData(props) {
                     </form>
                 </div>
                 <div className={'city-location'}>
-                    <p className={'location-history'}>定位/历史</p>
+                    <p className={'location-history'} data-cate={'history'}>定位/历史</p>
                     <button className={'btn btn-location'}><EnvironmentOutlined className={'local-position'} />定位</button>
                     <button className={'btn btn-default'}>北京</button>
-                    <p className={'city-hot'}>热门</p>
+                    <p className={'city-hot'} data-cate={'hot'}>热门</p>
                     {outputHotCity()}
                 </div>
                 {outputCityList()}
-                {/* <div className={'city-section-wrapper'}>
-                    <div className={'city-section'}>
-                        <li className={'city-title'}>A</li>
-                        <ul className={'city-list'}>
-                            <li className={'city-item'}>长沙</li>
-                            <li className={'city-item'}>长沙</li>
-                            <li className={'city-item'}>长沙</li>
-                            <li className={'city-item'}>长沙</li>
-                        </ul>
-                    </div>
-                    <div className={'city-section'}>
-                        <p className={'city-title'}>A</p>
-                        <ul className={'city-list'}>
-                            <li className={'city-item'}>长沙</li>
-                            <li className={'city-item'}>长沙</li>
-                            <li className={'city-item'}>长沙</li>
-                            <li className={'city-item'}>长沙</li>
-                        </ul>
-                    </div>
-                    <div className={'city-section'}>
-                        <p className={'city-title'}>A</p>
-                        <ul className={'city-list'}>
-                            <li className={'city-item'}>长沙</li>
-                            <li className={'city-item'}>长沙</li>
-                            <li className={'city-item'}>长沙</li>
-                            <li className={'city-item'}>长沙</li>
-                        </ul>
-                    </div>
-                </div> */}
+                <div className={'alpha-list'}>
+                    <div onClick={() => scrollToAlpha('history')}>历史</div>
+                    <div onClick={() => scrollToAlpha('hot')}>热门</div>
+                    {Alphabet.map(alpha => {
+                        return <AlphaIndex
+                            key={alpha}
+                            alpha={alpha}
+                            scrollToAlpha={scrollToAlpha}
+                        />
+                    })}
+                </div>
             </div>
         </div>
     )
-}
+})
 
 CityData.propTypes = {
     citiData: PropTypes.object,
     fetchCityData: PropTypes.func.isRequired,
     showCitySelector: PropTypes.func.isRequired,
 }
+
+export default CityData
