@@ -12,6 +12,9 @@ const HotItem = memo((props) => {
         <button className={'btn'}>{name}</button>
     )
 })
+HotItem.propTypes = {
+    name: PropTypes.string.isRequired
+}
 const HotSection = memo((props) => {
     const {
         hotCities
@@ -29,6 +32,9 @@ const HotSection = memo((props) => {
         </div>
     )
 })
+HotSection.propTypes = {
+    hotCities: PropTypes.array.isRequired
+}
 const CityItem = memo((props) => {
     const {
         name
@@ -37,6 +43,9 @@ const CityItem = memo((props) => {
         <li className={'city-item'}>{name}</li>
     )
 })
+CityItem.propTypes = {
+    name: PropTypes.string.isRequired
+}
 const CitySection = memo((props) => {
     const {
         cityList = [],
@@ -54,6 +63,10 @@ const CitySection = memo((props) => {
         </ul>
     )
 })
+CitySection.propTypes = {
+    cityList: PropTypes.array,
+    title: PropTypes.string.isRequired
+}
 const CityWrapper = memo((props) => {
     const {
         cityList
@@ -72,7 +85,9 @@ const CityWrapper = memo((props) => {
         </div>
     )
 })
-
+CityWrapper.propTypes = {
+    cityList: PropTypes.array.isRequired
+}
 const AlphaIndex = memo((props) => {
     const {
         alpha,
@@ -82,6 +97,10 @@ const AlphaIndex = memo((props) => {
         <div className={'alpha-item'} onClick={() => scrollToAlpha(alpha)}>{alpha}</div>
     )
 })
+AlphaIndex.propTypes = {
+    alpha: PropTypes.string.isRequired,
+    scrollToAlpha: PropTypes.func.isRequired
+}
 
 const Alphabet = Array.from(new Array(26), (ele, index) => {
     return String.fromCharCode(65 + index)
