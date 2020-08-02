@@ -6,6 +6,7 @@ import {
     ACTION_SET_GET_LOCATION_CITY,
     ACTION_SET_IS_DATE_SELECTOR_VISIBLE,
     ACTION_SET_CURRENT_SELECTING_LEFT_CITY,
+    ACTION_SET_CITY_ALPHA,
     ACTION_SET_IS_LOADING_CITY_DATE,
     ACTION_SET_HIGHT_SPEED
 } from './action'
@@ -19,6 +20,7 @@ const defaultState = {
     currentLocation: '定位',
     currentSelectingLeftCity: false,
     historyCities: [],
+    cityAlpha: '',
     hightSpeed: false
 }
 export default (state = defaultState, action) => {
@@ -47,6 +49,10 @@ export default (state = defaultState, action) => {
         case ACTION_SET_CURRENT_SELECTING_LEFT_CITY:
             newState = Object.assign({}, state)
             newState.currentSelectingLeftCity = action.payload
+            return newState
+        case ACTION_SET_CITY_ALPHA:
+            newState = Object.assign({}, state)
+            newState.cityAlpha = action.payload
             return newState
         default:
             return state

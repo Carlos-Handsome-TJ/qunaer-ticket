@@ -8,6 +8,7 @@ export const ACTION_SET_IS_LOADING_CITY_DATE = 'set_is_loading_city_date'
 export const ACTION_SET_HIGHT_SPEED = 'set_hight_speed'
 export const ACTION_SET_GET_LOCATION_CITY = 'action_set_get_location_city'
 export const ACTION_SET_SELECTED_CITY = 'action_set_selected_city'
+export const ACTION_SET_CITY_ALPHA = 'action_set_city_alpha'
 //初始出发车站
 export const setFrom = (from) => ({
     type: ACTION_SET_FROM,
@@ -105,6 +106,18 @@ export const selectCity = (city) => {
             dispatch(leftStateSelected(false))
             dispatch(hideCitySelector(false))
         }
+    }
+}
+//城市首字母提示框内容显示:
+export const setCityAlpha = (payload) => ({
+    type: ACTION_SET_CITY_ALPHA,
+    payload
+})
+export const showCityAlpha = (alpha) => {
+    document.querySelector(`[data-cate='${alpha}']`)
+    .scrollIntoView()
+    return dispatch => {
+        dispatch(setCityAlpha(alpha))
     }
 }
 //日期选择

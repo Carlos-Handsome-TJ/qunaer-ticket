@@ -104,19 +104,47 @@ CityWrapper.propTypes = {
 const AlphaIndex = memo((props) => {
     const {
         alpha,
-        scrollToAlpha
+        showCityAlpha,
+        showAlpha,
+        setShowAlpha
     } = props
+    const changeShowAlpha = useCallback(() => {
+        setShowAlpha(false)
+        let timer
+        if (!timer) {
+            timer = setTimeout(() => {
+                setShowAlpha(true)
+            }, 400);
+        }
+        timer = null
+    }, [showAlpha])
     return (
-        <div className={'alpha-item'} onClick={() => scrollToAlpha(alpha)}>{alpha}</div>
+        <div className={'alpha-item'} onClick={() => {
+            showCityAlpha(alpha)
+            changeShowAlpha()
+        }
+        }>{alpha}</div>
     )
 })
 AlphaIndex.propTypes = {
     alpha: PropTypes.string.isRequired,
-    scrollToAlpha: PropTypes.func.isRequired
+    showCityAlpha: PropTypes.func.isRequired
 }
 const Alphabet = Array.from(new Array(26), (ele, index) => {
     return String.fromCharCode(65 + index)
 })
+const CityAlpha = memo((props) => {
+    const {
+        cityAlpha,
+        showAlpha
+    } = props
+    return (
+        <div className={classnames('city-location-tip', { 'hidden': showAlpha })}>
+            <p className={'city-alpha'}>{cityAlpha}</p>
+        </div>
+    )
+})
+
 const CityData = memo((props) => {
     const {
         show,
@@ -126,7 +154,9 @@ const CityData = memo((props) => {
         getLocation,
         currentLocation,
         selectCity,
-        historyCities
+        historyCities,
+        showCityAlpha,
+        cityAlpha
     } = props
     let hotCity, cityList
     if (cityData) {
@@ -165,6 +195,7 @@ const CityData = memo((props) => {
         document.querySelector(`[data-cate='${alpha}']`)
             .scrollIntoView()
     }, [])
+    const [showAlpha, setShowAlpha] = useState(true)
     return (
         <div>
             <div className={classnames('city-selector-wrapper', { hidden: !show })}>
@@ -212,12 +243,16 @@ const CityData = memo((props) => {
                         return <AlphaIndex
                             key={alpha}
                             alpha={alpha}
-                            scrollToAlpha={scrollToAlpha}
+                            showCityAlpha={showCityAlpha}
+                            showAlpha={showAlpha}
+                            setShowAlpha={setShowAlpha}
                         />
                     })}
                 </div>
-            </div>
-            <div className={'container'}>
+                <CityAlpha
+                    cityAlpha={cityAlpha}
+                    showAlpha={showAlpha}
+                />
             </div>
         </div>
     )

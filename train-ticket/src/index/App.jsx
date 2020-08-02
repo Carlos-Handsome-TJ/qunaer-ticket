@@ -10,7 +10,8 @@ import {
     showCitySelectorRight,
     fetchCityData,
     getLocation,
-    selectCity
+    selectCity,
+    showCityAlpha
 } from './store/action'
 
 function App(props) {
@@ -23,6 +24,7 @@ function App(props) {
         dispatch,
         currentLocation,
         historyCities,
+        cityAlpha
     } = props
     const onBack = useCallback(() => {
         window.history.back(-1)
@@ -34,7 +36,8 @@ function App(props) {
             showCitySelectorRight,
             fetchCityData,
             getLocation,
-            selectCity
+            selectCity,
+            showCityAlpha
         }, dispatch)
     }, [])
     return (
@@ -51,6 +54,7 @@ function App(props) {
                 cityData={cityData}
                 currentLocation={currentLocation}
                 historyCities={historyCities}
+                cityAlpha={cityAlpha}
                 {...cbs}
             />
         </div>
