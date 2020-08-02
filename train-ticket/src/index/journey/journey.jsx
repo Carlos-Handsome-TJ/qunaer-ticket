@@ -3,7 +3,7 @@ import { SwapOutlined } from '@ant-design/icons'
 import './journey.less'
 
 export default function Journey(props) {
-    const { from, to, exchangeFromTo, showCitySelector } = props
+    const { from, to, exchangeFromTo, showCitySelectorLeft, showCitySelectorRight } = props
     return (
             <div className={'journey-wrapper'}>
                 <form className={'journey-station'}>
@@ -13,7 +13,7 @@ export default function Journey(props) {
                         readOnly
                         className={'station right'}
                         value={from}
-                        onClick={() => showCitySelector(true)}
+                        onClick={() => showCitySelectorLeft(true)}
                     ></input>
                     <SwapOutlined
                         style={{outline: 'none'}}
@@ -25,7 +25,7 @@ export default function Journey(props) {
                         readOnly
                         className={'station left'}
                         value={to}
-                        onClick={() => showCitySelector(true)}
+                        onClick={() => showCitySelectorRight(true)}
                     ></input>
                 </form>
             </div>

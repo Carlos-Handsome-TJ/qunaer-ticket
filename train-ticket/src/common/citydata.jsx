@@ -6,18 +6,21 @@ import './citydata.less'
 
 const HotItem = memo((props) => {
     const {
-        name
+        name,
+        selectCity
     } = props
     return (
-        <button className={'btn'}>{name}</button>
+        <button className={'btn'} onClick={() => selectCity(name)}>{name}</button >
     )
 })
 HotItem.propTypes = {
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    selectCity: PropTypes.func.isRequired
 }
 const HotSection = memo((props) => {
     const {
-        hotCities
+        hotCities,
+        selectCity
     } = props
     return (
         <div className={'city-hot-item'}>
@@ -26,6 +29,7 @@ const HotSection = memo((props) => {
                     <HotItem
                         key={item.name}
                         name={item.name}
+                        selectCity={selectCity}
                     ></HotItem>
                 )
             })}
@@ -33,23 +37,27 @@ const HotSection = memo((props) => {
     )
 })
 HotSection.propTypes = {
-    hotCities: PropTypes.array.isRequired
+    hotCities: PropTypes.array.isRequired,
+    selectCity: PropTypes.func.isRequired
 }
 const CityItem = memo((props) => {
     const {
-        name
+        name,
+        selectCity
     } = props
     return (
-        <li className={'city-item'}>{name}</li>
+        <li className={'city-item'} onClick={() => selectCity(name)}>{name}</li>
     )
 })
 CityItem.propTypes = {
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    selectCity: PropTypes.func.isRequired
 }
 const CitySection = memo((props) => {
     const {
         cityList = [],
-        title
+        title,
+        selectCity
     } = props
     return (
         <ul className={'city-list'} data-cate={title}>
@@ -58,6 +66,7 @@ const CitySection = memo((props) => {
                 return <CityItem
                     key={city.name}
                     name={city.name}
+                    selectCity={selectCity}
                 />
             })}
         </ul>
@@ -65,11 +74,13 @@ const CitySection = memo((props) => {
 })
 CitySection.propTypes = {
     cityList: PropTypes.array,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    selectCity: PropTypes.func.isRequired
 }
 const CityWrapper = memo((props) => {
     const {
-        cityList
+        cityList,
+        selectCity
     } = props
     return (
         <div className={'city-section-wrapper'}>
@@ -79,6 +90,7 @@ const CityWrapper = memo((props) => {
                         key={citySeries.title}
                         cityList={citySeries.citys}
                         title={citySeries.title}
+                        selectCity={selectCity}
                     />
                 })
             }
@@ -86,7 +98,8 @@ const CityWrapper = memo((props) => {
     )
 })
 CityWrapper.propTypes = {
-    cityList: PropTypes.array.isRequired
+    cityList: PropTypes.array.isRequired,
+    selectCity: PropTypes.func.isRequired
 }
 const AlphaIndex = memo((props) => {
     const {
@@ -101,7 +114,6 @@ AlphaIndex.propTypes = {
     alpha: PropTypes.string.isRequired,
     scrollToAlpha: PropTypes.func.isRequired
 }
-
 const Alphabet = Array.from(new Array(26), (ele, index) => {
     return String.fromCharCode(65 + index)
 })
@@ -109,10 +121,12 @@ const CityData = memo((props) => {
     const {
         show,
         cityData,
-        showCitySelector,
+        showCitySelectorLeft,
         fetchCityData,
         getLocation,
-        currentLocation
+        currentLocation,
+        selectCity,
+        historyCities
     } = props
     let hotCity, cityList
     if (cityData) {
@@ -127,17 +141,22 @@ const CityData = memo((props) => {
         }
         fetchCityData()
     }, [show])
-
     const outputHotCity = () => {
         if (hotCity && show) {
-            return <HotSection hotCities={hotCity} />
+            return <HotSection
+                hotCities={hotCity}
+                selectCity={selectCity}
+            />
         } else {
             return <div>isLoading</div>
         }
     }
     const outputCityList = () => {
         if (cityList && show) {
-            return <CityWrapper cityList={cityList} />
+            return <CityWrapper
+                cityList={cityList}
+                selectCity={selectCity}
+            />
         } else {
             return <div>isLoading</div>
         }
@@ -152,7 +171,7 @@ const CityData = memo((props) => {
                 <div className={'city-search'}>
                     <LeftOutlined
                         className={'city-back'}
-                        onClick={() => showCitySelector(false)}
+                        onClick={() => showCitySelectorLeft(false)}
                     />
                     <form className={'city-search-form'}>
                         <input
@@ -171,8 +190,17 @@ const CityData = memo((props) => {
                 </div>
                 <div className={'city-location'}>
                     <p className={'location-history'} data-cate={'history'}>定位/历史</p>
-                    <button className={'btn btn-location'} onClick={() => getLocation()}><EnvironmentOutlined className={'local-position'} />{currentLocation}</button>
-                    <button className={'btn btn-default'}>北京</button>
+                    <button
+                        className={'btn btn-location'}
+                        onClick={() => getLocation()}
+                    ><EnvironmentOutlined className={'local-position'} />{currentLocation}</button>
+                    {historyCities.map(city => {
+                        return (<button
+                            className={'btn btn-default'}
+                            key={city}
+                            onClick={() => selectCity(city)}
+                        >{city}</button>)
+                    })}
                     <p className={'city-hot'} data-cate={'hot'}>热门</p>
                     {outputHotCity()}
                 </div>
@@ -198,7 +226,8 @@ const CityData = memo((props) => {
 CityData.propTypes = {
     citiData: PropTypes.object,
     fetchCityData: PropTypes.func.isRequired,
-    showCitySelector: PropTypes.func.isRequired,
+    showCitySelectorLeft: PropTypes.func.isRequired,
+    showCitySelectorRight: PropTypes.func.isRequired,
 }
 
 export default CityData
