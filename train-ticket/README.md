@@ -1,68 +1,18 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+/*  
+    ###
+    1>使用React官网的create-react-app脚手架工具搭建demo的基本框架。
+    ###
+    2>由于官方的脚手架比较简单，默认的CSS样式是使用CSS，SCSS，我习惯使用LESS，所以还需要自己手动配置一下LESS相关的样式。
+    ###
+    3>有些小的UI样式组件，个人比价懒，所以又把AntD装进去了，其实自己手写的话，打包文件会小很多。
+    ###
+    4>项目全部使用的是函数组件，没有使用Class组件，现在函数组件完全可以替代Class组件，有了Hooks，组件代码逻辑写起来会更加清晰简洁。
+      Hooks确实好用。官方也说明了为什么要使用Hooks，主要原因还是组件之间的状态服用比较困难，不如在组件中，自己新建一个状态，由事件
+      驱动更改状态。
+    ###
+    5>我还用了Redux来管理状态，因为这个demo涉及到的状态还比较多，不使用的Redux的话，组件中会充斥大量的数据状态，组件就比较庞大。而且
+      有了Redux之后，数据和组件之间就可以很清晰的分离，需要什么数据，就去Redux里面获取，把状态定义在Redux之中，派发Action去更改状态。
+      如果组件的状态比较简单，其实也可以使用useReduce钩子函数，能代替部分Redux的功能。
+    ###
+    6>最近实习事情比较多，只有周末才能提交一下代码的样子了 = =|
+*/
