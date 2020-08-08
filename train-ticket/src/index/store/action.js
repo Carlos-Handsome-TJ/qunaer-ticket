@@ -1,7 +1,6 @@
 export const ACTION_SET_FROM = 'set_from'
 export const ACTION_SET_TO = 'set_to'
 export const ACTION_SET_IS_CITY_SELECTOR_VISIBLE = 'set_is_city_selector_visible'
-export const ACTION_SET_IS_DATE_SELECTOR_VISIBLE = 'set_is_date_selector_visible'
 export const ACTION_SET_CURRENT_SELECTING_LEFT_CITY = 'set_current_selecting_left_city'
 export const ACTION_GET_CITY_DATA = 'get_city_data'
 export const ACTION_SET_IS_LOADING_CITY_DATE = 'set_is_loading_city_date'
@@ -9,6 +8,7 @@ export const ACTION_SET_HIGHT_SPEED = 'set_hight_speed'
 export const ACTION_SET_GET_LOCATION_CITY = 'action_set_get_location_city'
 export const ACTION_SET_SELECTED_CITY = 'action_set_selected_city'
 export const ACTION_SET_CITY_ALPHA = 'action_set_city_alpha'
+export const ACTION_SET_DEPART_DATE = 'action_set_depart_date'
 //初始出发车站
 export const setFrom = (from) => ({
     type: ACTION_SET_FROM,
@@ -67,6 +67,7 @@ export const setLocationCity = (payload) => ({
 //获取当前用户网络定位：
 export const getLocation = () => {
     return (dispatch, getState) => {
+        dispatch(setLocationCity('定位中...'))
         const { currentLocation, historyCities, currentSelectingLeftCity } = getState()
         fetch("http://restapi.amap.com/v3/ip?key=fd580c21a8490716d0e56747100a2994")
             .then((res) => {
@@ -86,7 +87,8 @@ export const getLocation = () => {
                     })
                 }
             }).catch((res) => {
-                console.log(res.status);
+                dispatch(setLocationCity('定位失败'))
+                console.log(res.status)
             });
     }
 }
@@ -115,16 +117,11 @@ export const setCityAlpha = (payload) => ({
 })
 export const showCityAlpha = (alpha) => {
     document.querySelector(`[data-cate='${alpha}']`)
-    .scrollIntoView()
+        .scrollIntoView()
     return dispatch => {
         dispatch(setCityAlpha(alpha))
     }
 }
-//日期选择
-export const setIsDataSelector = (isDataSelector) => ({
-    type: ACTION_SET_IS_DATE_SELECTOR_VISIBLE,
-    payload: isDataSelector
-})
 //是否正在加载城市日期
 export const setIsLoading = (isLoading) => ({
     type: ACTION_SET_IS_LOADING_CITY_DATE,
@@ -169,3 +166,8 @@ export const setCitySelected = (city) => {
         }
     }
 }
+//显示日期选择浮层：
+export const selectDateDepart = (payload) => ({
+    type: ACTION_SET_DEPART_DATE,
+    payload
+})

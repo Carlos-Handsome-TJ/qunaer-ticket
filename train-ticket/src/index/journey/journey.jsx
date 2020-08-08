@@ -6,7 +6,7 @@ export default function Journey(props) {
     const { from, to, exchangeFromTo, showCitySelectorLeft, showCitySelectorRight } = props
     return (
             <div className={'journey-wrapper'}>
-                <form className={'journey-station'}>
+                <div className={'journey-station'}>
                     <input
                         type='text'
                         name='form'
@@ -27,7 +27,7 @@ export default function Journey(props) {
                         value={to}
                         onClick={() => showCitySelectorRight(true)}
                     ></input>
-                </form>
+                </div>
             </div>
     )
 }

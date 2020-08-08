@@ -4,11 +4,9 @@ import {
     ACTION_SET_IS_CITY_SELECTOR_VISIBLE,
     ACTION_GET_CITY_DATA,
     ACTION_SET_GET_LOCATION_CITY,
-    ACTION_SET_IS_DATE_SELECTOR_VISIBLE,
+    ACTION_SET_DEPART_DATE,
     ACTION_SET_CURRENT_SELECTING_LEFT_CITY,
     ACTION_SET_CITY_ALPHA,
-    ACTION_SET_IS_LOADING_CITY_DATE,
-    ACTION_SET_HIGHT_SPEED
 } from './action'
 const defaultState = {
     from: '北京',
@@ -21,7 +19,7 @@ const defaultState = {
     currentSelectingLeftCity: false,
     historyCities: [],
     cityAlpha: '',
-    hightSpeed: false
+    isDateSelectorVisible: false
 }
 export default (state = defaultState, action) => {
     let newState
@@ -53,6 +51,10 @@ export default (state = defaultState, action) => {
         case ACTION_SET_CITY_ALPHA:
             newState = Object.assign({}, state)
             newState.cityAlpha = action.payload
+            return newState
+        case ACTION_SET_DEPART_DATE:
+            newState = Object.assign({}, state)
+            newState.isDateSelectorVisible = action.payload
             return newState
         default:
             return state

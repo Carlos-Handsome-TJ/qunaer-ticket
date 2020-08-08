@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import Header from '../common/header'
 import Journey from './journey/journey'
 import CityData from '../common/citydata'
+import DateSelector from '../common/date'
+import Depart from './depart/depart'
 import {
     exchangeFromTo,
     showCitySelectorLeft,
@@ -11,7 +13,8 @@ import {
     fetchCityData,
     getLocation,
     selectCity,
-    showCityAlpha
+    showCityAlpha,
+    selectDateDepart
 } from './store/action'
 
 function App(props) {
@@ -24,7 +27,8 @@ function App(props) {
         dispatch,
         currentLocation,
         historyCities,
-        cityAlpha
+        cityAlpha,
+        isDateSelectorVisible
     } = props
     const onBack = useCallback(() => {
         window.history.back(-1)
@@ -40,14 +44,28 @@ function App(props) {
             showCityAlpha
         }, dispatch)
     }, [])
+    const setDateCbs = useMemo(() => {
+        return bindActionCreators({
+            selectDateDepart
+        }, dispatch)
+    }, [])
     return (
         <div>
             <Header title={'火车票'} onBack={onBack} />
-            <Journey
-                from={from}
-                to={to}
-                {...cbs}
-            />
+            <form>
+                <Journey
+                    from={from}
+                    to={to}
+                    {...cbs}
+                />
+                <Depart
+                    {...setDateCbs}
+                />
+                <DateSelector
+                    isDateSelectorVisible={isDateSelectorVisible}
+                    {...setDateCbs}
+                />
+            </form>
             <CityData
                 show={isCitySelectorVisible}
                 isLoading={isLoadingCityDate}
