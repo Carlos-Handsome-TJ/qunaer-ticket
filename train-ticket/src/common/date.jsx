@@ -6,15 +6,24 @@ import './date.less'
 const DaySection = (props) => {
     const {
         day,
-        months
+        months,
     } = props
     const now = new Date()
     now.setHours(0)
     now.setMinutes(0)
     now.setSeconds(0)
     now.setMilliseconds(0)
+    //当月日期，当月的总天数
+    const year = now.getFullYear()
     const currentDate = now.getDate()
     const currentMonth = now.getMonth()
+    const currentMonthAllDays = new Date(year, currentMonth + 1, 0).getDate()
+    //下月总天数：
+    now.setMonth(now.getMonth() + 1)
+    const nextMonthAllDays = new Date(year, now.getMonth() + 1, 0).getDate()
+    //下下个月总天数：
+    now.setMonth(now.getMonth() + 1)
+    const lastMonthAllDays = new Date(year, now.getMonth() + 1, 0).getDate()
     const dayStyles = []
     const month = new Date(months).getMonth()
     //日期小于当前日期的，添加灰色不可点击样式
@@ -26,9 +35,29 @@ const DaySection = (props) => {
     if (dayIndex % 7 === 0 || dayIndex % 7 === 6) {
         dayStyles.unshift('day-weekend')
     }
+    //日期是今天，添加一个背景提示色：
+    if (month === currentMonth && day === currentDate) {
+        dayStyles.unshift('day-today')
+    }
+    //30天后的日期需要预约，且预约的时间也只能预约到60之内,日期下面显示预约提示框：
+    const appointDay = 30
+    const hiddenAppointStyle = []
+    if (day - currentDate >= 30) {
+        hiddenAppointStyle.unshift('show-appoint')
+    }
+    //下个月需要补的天数：
+    const nextMonthDiffDays = appointDay - (currentMonthAllDays - currentDate)
+    if (month - currentMonth === 1 && appointDay <= nextMonthAllDays && day > currentDate && day) {
+        hiddenAppointStyle.unshift('show-appoint')
+    }
+    //下下个月需要补全的天数：
+    if (month - currentMonth === 2 && day <= nextMonthDiffDays && day) {
+        hiddenAppointStyle.unshift('show-appoint')
+    }
     return (
-        <td className={classnames(dayStyles)}>
-            {day}
+        <td className={classnames('date-detail', dayStyles)}>
+            <span>{day}</span>
+            <span className={classnames('hidden-appoint', hiddenAppointStyle)}>预约</span>
         </td>
     )
 }

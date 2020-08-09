@@ -53,13 +53,28 @@
                 line-height: 50px;
             }
             .date-day {
+                width: 100%;
                 display: grid;
                 grid-template-columns: repeat(7, 1fr);
                 grid-template-rows: 50px;
                 justify-items: center;
-                align-items: center;
+                justify-content: center;
+                align-items: flex-start;
                 font-size: 14px;
                 font-weight: bold;
+                & > td {
+                    width: 100%;
+                    line-height: 25px;
+                    text-align: center;
+                    & > .hidden-appoint {
+                        display: none;
+                    }
+                    .show-appoint {
+                        display: block;
+                        line-height: 25px;
+                        color: tomato;
+                    } 
+                }
             }
         }
     }
@@ -73,3 +88,7 @@
 .day-disable {
     color: #ccc;
 }
+.day-today {
+    background: #00afc7;
+}
+
