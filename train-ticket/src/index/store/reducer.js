@@ -7,7 +7,10 @@ import {
     ACTION_SET_DEPART_DATE,
     ACTION_SET_CURRENT_SELECTING_LEFT_CITY,
     ACTION_SET_CITY_ALPHA,
+    ACTION_SET_CHOOSE_DEPART_DATE
 } from './action'
+const currentMonth = new Date().getMonth()
+const currentDate = new Date().getDate()
 const defaultState = {
     from: '北京',
     to: '上海',
@@ -19,7 +22,12 @@ const defaultState = {
     currentSelectingLeftCity: false,
     historyCities: [],
     cityAlpha: '',
-    isDateSelectorVisible: false
+    isDateSelectorVisible: false,
+    dateDepart: {
+        monthIndex: currentMonth,
+        day: currentDate,
+    },
+    isToday: ['(今天)', '(明天)', '(后天)']
 }
 export default (state = defaultState, action) => {
     let newState
@@ -55,6 +63,11 @@ export default (state = defaultState, action) => {
         case ACTION_SET_DEPART_DATE:
             newState = Object.assign({}, state)
             newState.isDateSelectorVisible = action.payload
+            return newState
+        case ACTION_SET_CHOOSE_DEPART_DATE:
+            newState = Object.assign({}, state)
+            console.log(action.payload)
+            newState.dateDepart = action.payload
             return newState
         default:
             return state

@@ -14,7 +14,8 @@ import {
     getLocation,
     selectCity,
     showCityAlpha,
-    selectDateDepart
+    selectDateDepart,
+    chooseDepartDate
 } from './store/action'
 
 function App(props) {
@@ -28,7 +29,9 @@ function App(props) {
         currentLocation,
         historyCities,
         cityAlpha,
-        isDateSelectorVisible
+        isDateSelectorVisible,
+        dateDepart,
+        isToday
     } = props
     const onBack = useCallback(() => {
         window.history.back(-1)
@@ -46,7 +49,8 @@ function App(props) {
     }, [])
     const setDateCbs = useMemo(() => {
         return bindActionCreators({
-            selectDateDepart
+            selectDateDepart,
+            chooseDepartDate
         }, dispatch)
     }, [])
     return (
@@ -59,6 +63,8 @@ function App(props) {
                     {...cbs}
                 />
                 <Depart
+                    dateDepart={dateDepart}
+                    isToday={isToday}
                     {...setDateCbs}
                 />
                 <DateSelector

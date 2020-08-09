@@ -6,7 +6,10 @@ import './date.less'
 const DaySection = (props) => {
     const {
         day,
+        monthIndex,
         months,
+        selectDateDepart,
+        chooseDepartDate
     } = props
     const now = new Date()
     now.setHours(0)
@@ -54,8 +57,18 @@ const DaySection = (props) => {
     if (month - currentMonth === 2 && day <= nextMonthDiffDays && day) {
         hiddenAppointStyle.unshift('show-appoint')
     }
+
+
     return (
-        <td className={classnames('date-detail', dayStyles)}>
+        <td
+            className={classnames('date-detail', dayStyles)}
+            onClick={() => {
+                if (day >= currentDate || month > currentMonth) {
+                    chooseDepartDate({ day, monthIndex })
+                    selectDateDepart(false)
+                }
+            }}
+        >
             <span>{day}</span>
             <span className={classnames('hidden-appoint', hiddenAppointStyle)}>预约</span>
         </td>
@@ -64,7 +77,10 @@ const DaySection = (props) => {
 const WeekSection = (props) => {
     const {
         week,
-        months
+        months,
+        monthIndex,
+        chooseDepartDate,
+        selectDateDepart
     } = props
     return (
         <tr className={'date-day'}>
@@ -73,7 +89,10 @@ const WeekSection = (props) => {
                     return <DaySection
                         key={index}
                         day={day}
+                        monthIndex={monthIndex}
                         months={months}
+                        chooseDepartDate={chooseDepartDate}
+                        selectDateDepart={selectDateDepart}
                     />
                 })
             }
@@ -82,7 +101,9 @@ const WeekSection = (props) => {
 }
 const MonthSection = (props) => {
     const {
-        months
+        months,
+        selectDateDepart,
+        chooseDepartDate
     } = props
     const year = new Date(months).getFullYear()
     const month = new Date(months).getMonth()
@@ -114,7 +135,10 @@ const MonthSection = (props) => {
                         return <WeekSection
                             key={index}
                             week={week}
+                            monthIndex={month}
                             months={months}
+                            selectDateDepart={selectDateDepart}
+                            chooseDepartDate={chooseDepartDate}
                         />
                     })
                 }
@@ -126,7 +150,8 @@ const MonthSection = (props) => {
 const DateSelector = (props) => {
     const {
         isDateSelectorVisible,
-        selectDateDepart
+        selectDateDepart,
+        chooseDepartDate
     } = props
     const now = new Date()
     now.setHours(0)
@@ -146,7 +171,7 @@ const DateSelector = (props) => {
     const weekday = ['日', '一', '二', '三', '四', '五', '六']
     return (
         <div>
-            <div className={classnames('date-choose-wrapper', { showDateSelector: isDateSelectorVisible })}>
+            <div className={classnames('date-choose-wrapper', { showDateSelector: !isDateSelectorVisible })}>
                 <div className={'date-choose-nav'}>
                     <LeftOutlined
                         className={'date-choose-arrow'}
@@ -164,6 +189,8 @@ const DateSelector = (props) => {
                         return <MonthSection
                             key={month}
                             months={month}
+                            selectDateDepart={selectDateDepart}
+                            chooseDepartDate={chooseDepartDate}
                         />
                     })}
                 </div>

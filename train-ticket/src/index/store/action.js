@@ -9,6 +9,7 @@ export const ACTION_SET_GET_LOCATION_CITY = 'action_set_get_location_city'
 export const ACTION_SET_SELECTED_CITY = 'action_set_selected_city'
 export const ACTION_SET_CITY_ALPHA = 'action_set_city_alpha'
 export const ACTION_SET_DEPART_DATE = 'action_set_depart_date'
+export const ACTION_SET_CHOOSE_DEPART_DATE = 'action_set_choose_depart_date'
 //初始出发车站
 export const setFrom = (from) => ({
     type: ACTION_SET_FROM,
@@ -169,5 +170,10 @@ export const setCitySelected = (city) => {
 //显示日期选择浮层：
 export const selectDateDepart = (payload) => ({
     type: ACTION_SET_DEPART_DATE,
+    payload
+})
+//选择出发日期：
+export const chooseDepartDate = (payload) => ({
+    type: ACTION_SET_CHOOSE_DEPART_DATE,
     payload
 })
