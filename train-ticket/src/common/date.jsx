@@ -5,17 +5,37 @@ import './date.less'
 
 const DaySection = (props) => {
     const {
-        day
+        day,
+        months
     } = props
+    const now = new Date()
+    now.setHours(0)
+    now.setMinutes(0)
+    now.setSeconds(0)
+    now.setMilliseconds(0)
+    const currentDate = now.getDate()
+    const currentMonth = now.getMonth()
+    const dayStyles = []
+    const month = new Date(months).getMonth()
+    //日期小于当前日期的，添加灰色不可点击样式
+    if (day < currentDate && currentMonth === month) {
+        dayStyles.unshift('day-disable')
+    }
+    //周末日期添加橙色字体样式：
+    const dayIndex = new Date(new Date(months).setDate(day)).getDay()
+    if (dayIndex % 7 === 0 || dayIndex % 7 === 6) {
+        dayStyles.unshift('day-weekend')
+    }
     return (
-        <td>
+        <td className={classnames(dayStyles)}>
             {day}
         </td>
     )
 }
 const WeekSection = (props) => {
     const {
-        week
+        week,
+        months
     } = props
     return (
         <tr className={'date-day'}>
@@ -24,6 +44,7 @@ const WeekSection = (props) => {
                     return <DaySection
                         key={index}
                         day={day}
+                        months={months}
                     />
                 })
             }
@@ -64,6 +85,7 @@ const MonthSection = (props) => {
                         return <WeekSection
                             key={index}
                             week={week}
+                            months={months}
                         />
                     })
                 }
@@ -95,7 +117,7 @@ const DateSelector = (props) => {
     const weekday = ['日', '一', '二', '三', '四', '五', '六']
     return (
         <div>
-            <div className={classnames('date-choose-wrapper', { showDateSelector: !isDateSelectorVisible })}>
+            <div className={classnames('date-choose-wrapper', { showDateSelector: isDateSelectorVisible })}>
                 <div className={'date-choose-nav'}>
                     <LeftOutlined
                         className={'date-choose-arrow'}
