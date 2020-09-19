@@ -1,22 +1,19 @@
 .date-wrapper {
-    position: absolute;
-    top: 25%;
-    left: 0;
-    padding: 0 10px;
-    box-sizing: border-box;
-    width: 100%;
-    line-height: 20px;
     .date-depart {
-        font-size: 20px;
-        font-weight: bold;
-        margin: 0 10px;
-        padding: 20px;
+        width: 100%;
+        display: inline-grid;
+        grid-template-columns: 40px 60px 60px;
+        grid-template-rows: 40px;
+        align-items: center;
         border-bottom: 1px solid #ccc;
-        & > span {
-            display: inline-block;
+        .depart {
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
         }
         .depart-tip {
-            margin-left: 10px;
+            font-size: 20px;
+            font-weight: bold;
         }
     }
 }

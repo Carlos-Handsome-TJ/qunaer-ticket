@@ -1,92 +1,90 @@
-import React, { useMemo, useCallback } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import Header from '../common/header'
-import Journey from './journey/journey'
-import CityData from '../common/citydata'
-import DateSelector from '../common/date'
-import Depart from './depart/depart'
+import React, { useMemo, useCallback } from "react";
+import { bindActionCreators } from "redux";
+import { useDispatch, useSelector } from "react-redux";
+import Header from "../common/header";
+import Journey from "./journey/journey";
+import CityData from "../common/citydata";
+import DateSelector from "../common/date";
+import SearchButton from "../common/button";
+import Depart from "./depart/depart";
+import './App.less'
 import {
-    exchangeFromTo,
-    showCitySelectorLeft,
-    showCitySelectorRight,
-    fetchCityData,
-    getLocation,
-    selectCity,
-    showCityAlpha,
-    selectDateDepart,
-    chooseDepartDate
-} from './store/action'
+  exchangeFromTo,
+  showCitySelectorLeft,
+  showCitySelectorRight,
+  fetchCityData,
+  getLocation,
+  selectCity,
+  showCityAlpha,
+  selectDateDepart,
+  chooseDepartDate,
+} from "./store/action";
 
-function App(props) {
-    const {
-        from,
-        to,
-        isCitySelectorVisible,
-        isLoadingCityDate,
-        cityData,
-        dispatch,
-        currentLocation,
-        historyCities,
-        cityAlpha,
-        isDateSelectorVisible,
-        dateDepart,
-        isToday
-    } = props
-    const onBack = useCallback(() => {
-        window.history.back(-1)
-    }, [])
-    const cbs = useMemo(() => {
-        return bindActionCreators({
-            exchangeFromTo,
-            showCitySelectorLeft,
-            showCitySelectorRight,
-            fetchCityData,
-            getLocation,
-            selectCity,
-            showCityAlpha
-        }, dispatch)
-    }, [])
-    const setDateCbs = useMemo(() => {
-        return bindActionCreators({
-            selectDateDepart,
-            chooseDepartDate
-        }, dispatch)
-    }, [])
-    return (
-        <div>
-            <Header title={'火车票'} onBack={onBack} />
-            <form>
-                <Journey
-                    from={from}
-                    to={to}
-                    {...cbs}
-                />
-                <Depart
-                    dateDepart={dateDepart}
-                    isToday={isToday}
-                    {...setDateCbs}
-                />
-                <DateSelector
-                    isDateSelectorVisible={isDateSelectorVisible}
-                    {...setDateCbs}
-                />
-            </form>
-            <CityData
-                show={isCitySelectorVisible}
-                isLoading={isLoadingCityDate}
-                cityData={cityData}
-                currentLocation={currentLocation}
-                historyCities={historyCities}
-                cityAlpha={cityAlpha}
-                {...cbs}
-            />
-        </div>
-    )
-}
-const mapStateToProps = (state) => state
-const mapDispatchToProps = (dispatch) => {
-    return { dispatch }
+function App() {
+  const dispatch = useDispatch();
+  const props = useSelector((state) => state);
+  const {
+    from,
+    to,
+    isCitySelectorVisible,
+    isLoadingCityDate,
+    cityData,
+    currentLocation,
+    historyCities,
+    cityAlpha,
+    isDateSelectorVisible,
+    dateDepart,
+    isToday,
+  } = props;
+  const onBack = useCallback(() => {
+    window.history.back(-1);
+  }, []);
+  const cbs = useMemo(() => {
+    return bindActionCreators(
+      {
+        exchangeFromTo,
+        showCitySelectorLeft,
+        showCitySelectorRight,
+        fetchCityData,
+        getLocation,
+        selectCity,
+        showCityAlpha,
+      },
+      dispatch
+    );
+  }, []);
+  const setDateCbs = useMemo(() => {
+    return bindActionCreators(
+      {
+        selectDateDepart,
+        chooseDepartDate,
+      },
+      dispatch
+    );
+  }, []);
+  return (
+    <div>
+      <Header title={"火车票"} onBack={onBack} />
+      <form encType={"multipart/form-data"} action={"../../public/query.html"} className={'app-form'}>
+        <Journey from={from} to={to} {...cbs}></Journey>
+        <Depart dateDepart={dateDepart} isToday={isToday} {...setDateCbs} />
+        <SearchButton />
+      </form>
+      <DateSelector
+        isDateSelectorVisible={isDateSelectorVisible}
+        {...setDateCbs}
+      />
+      <CityData
+        show={isCitySelectorVisible}
+        isLoading={isLoadingCityDate}
+        cityData={cityData}
+        currentLocation={currentLocation}
+        historyCities={historyCities}
+        cityAlpha={cityAlpha}
+        {...cbs}
+      />
+    </div>
+  );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default App;

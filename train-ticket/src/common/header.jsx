@@ -16,8 +16,6 @@ export default function Header(props) {
                     />
                     <h3>{title}</h3>
                 </div>
-                <div className={'header-bg'}>
-                </div>
             </div>
         </div>
     )

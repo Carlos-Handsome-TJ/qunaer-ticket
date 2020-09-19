@@ -1,28 +1,11 @@
 .header-wrapper {
   .header-nav {
-    width: 100%;
-    height: 50px;
+    display: grid;
+    grid-template-columns: 50px 1fr 50px;
+    grid-template-rows: 50px;
+    justify-items: center;
+    align-items: center;
     background: linear-gradient(90deg, #00c9e2 3%, #00e4f5 92%);
-    line-height: 50px;
     color: #fff;
-    position: relative;
-    .header-arrow {
-      margin-left: 10px;
-      font-size: 20px;
-      outline: none;
-    }
-    h3 {
-      margin: 0 auto;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
-  .header-bg {
-    width: 100%;
-    height: 100px;
-    background-image: url(../asset/images/top_title.png);
-    background-size: cover;
   }
 }

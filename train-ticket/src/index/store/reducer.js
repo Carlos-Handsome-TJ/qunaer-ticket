@@ -66,7 +66,6 @@ export default (state = defaultState, action) => {
             return newState
         case ACTION_SET_CHOOSE_DEPART_DATE:
             newState = Object.assign({}, state)
-            console.log(action.payload)
             newState.dateDepart = action.payload
             return newState
         default:
